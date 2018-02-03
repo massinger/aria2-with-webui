@@ -1,4 +1,4 @@
-FROM resin/armv7hf-alpine
+FROM resin/armhf-alpine
 RUN [ "cross-build-start" ]
 
 MAINTAINER xujinkai <jack777@xujinkai.net>
