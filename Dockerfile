@@ -1,18 +1,17 @@
-FROM alpine:edge
+FROM resin/armv7hf-debian
+RUN [ "cross-build-start" ]
 
-MAINTAINER xujinkai <jack777@xujinkai.net>
+MAINTAINER massinger <massinger@139.com>
 
-RUN apk update && \
-	apk add --no-cache --update bash && \
+RUN apt-get update && \
 	mkdir -p /conf && \
 	mkdir -p /conf-copy && \
 	mkdir -p /data && \
-	apk add --no-cache --update aria2 && \
-	apk add git && \
+	apt-get install aria2 && \
+	apt-get install git && \
 	git clone https://github.com/ziahamza/webui-aria2 /aria2-webui && \
     rm /aria2-webui/.git* -rf && \
-    apk del git && \
-	apk add --update darkhttpd
+	apt-get install darkhttpd
 
 ADD files/start.sh /conf-copy/start.sh
 ADD files/aria2.conf /conf-copy/aria2.conf
@@ -28,3 +27,5 @@ EXPOSE 80
 EXPOSE 8080
 
 CMD ["/conf-copy/start.sh"]
+
+RUN [ "cross-build-end" ]
